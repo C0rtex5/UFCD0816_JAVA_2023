@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:8080';
+const apiUrl = 'http://localhost:8080/api/todos';
 
 function addTodo() {
     var todoInput = document.getElementById('new-todo');

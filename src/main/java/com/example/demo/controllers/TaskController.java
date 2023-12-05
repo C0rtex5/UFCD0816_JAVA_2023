@@ -10,6 +10,21 @@ import java.util.List;
 @RequestMapping("/tasks")
 public class TaskController {
 
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        taskRepository.deleteById(id);
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello, world!";
+    }
+
+    @GetMapping("/greet/{name}")
+    public String greet(@PathVariable String name) {
+        return "Hello, " + name + "!";
+    }
+
     private final taskRepository taskRepository;
 
     @Autowired
@@ -33,15 +48,15 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-public Task updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
+    public Task updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
     // Find the existing task by id from the repository
-    Task existingTask = taskRepository.findById(id).orElse(null);
+        Task existingTask = taskRepository.findById(id).orElse(null);
 
     // If the task with the given id exists
-    if (existingTask != null) {
+        if (existingTask != null) {
         // Update the existing task with the values from the updated task
-        existingTask.setDescription(updatedTask.getDescription());
-        existingTask.setCompleted(updatedTask.isCompleted());
+            existingTask.setDescription(updatedTask.getDescription());
+         existingTask.setCompleted(updatedTask.isCompleted());
 
         // Save the updated task in the repository and return the updated task
         return taskRepository.save(existingTask);
@@ -49,23 +64,5 @@ public Task updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
 
     // If the task with the given id doesn't exist, return null
     return null;
-}
-
-    @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id) {
-        taskRepository.deleteById(id);
     }
 }
-
-    
-/*
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello, world!";
-    }
-
-    @GetMapping("/greet/{name}")
-    public String greet(@PathVariable String name) {
-        return "Hello, " + name + "!";
-    }
-     */
