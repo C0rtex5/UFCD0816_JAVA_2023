@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Task;
-import com.example.demo.repositories.taskRepository;
+import com.example.demo.repositories.taskRepository; // Corrigir o nome da classe de repositório
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -9,11 +9,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
-
-    @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id) {
-        taskRepository.deleteById(id);
-    }
 
     @GetMapping("/hello")
     public String hello() {
@@ -25,10 +20,10 @@ public class TaskController {
         return "Hello, " + name + "!";
     }
 
-    private final taskRepository taskRepository;
+    private final taskRepository taskRepository; // Corrigir o nome da classe de repositório
 
     @Autowired
-    public TaskController(taskRepository taskRepository) {
+    public TaskController(taskRepository taskRepository) { // Corrigir o nome da classe de repositório
         this.taskRepository = taskRepository;
     }
 
@@ -49,20 +44,19 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public Task updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-    // Find the existing task by id from the repository
         Task existingTask = taskRepository.findById(id).orElse(null);
 
-    // If the task with the given id exists
         if (existingTask != null) {
-        // Update the existing task with the values from the updated task
             existingTask.setDescription(updatedTask.getDescription());
-         existingTask.setCompleted(updatedTask.isCompleted());
+            existingTask.setCompleted(updatedTask.isCompleted());
+            return taskRepository.save(existingTask);
+        }
 
-        // Save the updated task in the repository and return the updated task
-        return taskRepository.save(existingTask);
+        return null;
     }
 
-    // If the task with the given id doesn't exist, return null
-    return null;
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        taskRepository.deleteById(id);
     }
 }
