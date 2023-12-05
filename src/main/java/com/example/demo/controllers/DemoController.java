@@ -17,9 +17,3 @@ public class DemoController {
         return "Hello, " + name + "!";
     }
 }
-
-
-    
-
-
-
